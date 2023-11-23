@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | ARDA</title>
+    <!-- ======= Styles ====== -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',
+    filename='assets/css/style.css') }}"
+    />
+  </head>
+
+  <body>
+    <!-- =============== Navigation ================ -->
+    <div class="container">
+      <div class="navigation">
+        <ul>
+          <li>
+            <a href="#">
+              <span class="icon">
+                <ion-icon name="logo-apple"></ion-icon>
+              </span>
+              <span class="title">ARDA SERVICE</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ url_for('dashboard_customer') }}">
+              <span class="icon">
+                <ion-icon name="home-outline"></ion-icon>
+              </span>
+              <span class="title">Dashboard</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ url_for('dashboard_customer') }}">
+              <span class="icon">
+                <ion-icon name="people-outline"></ion-icon>
+              </span>
+              <span class="title">Pelanggan</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              <span class="icon">
+                <ion-icon name="chatbubble-outline"></ion-icon>
+              </span>
+              <span class="title">Pesanan</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              <span class="icon">
+                <ion-icon name="help-outline"></ion-icon>
+              </span>
+              <span class="title">Bantuan</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              <span class="icon">
+                <ion-icon name="settings-outline"></ion-icon>
+              </span>
+              <span class="title">Settings</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#">
+              <span class="icon">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+              </span>
+              <span class="title">Password</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ url_for('logout_customer') }}">
+              <span class="icon">
+                <ion-icon name="log-out-outline"></ion-icon>
+              </span>
+              <span class="title">Keluar</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ========================= Main ==================== -->
+      <div class="main">
+        <div class="topbar">
+          <div class="toggle">
+            <ion-icon name="menu-outline"></ion-icon>
+          </div>
+
+          <div class="user">
+            <img src="{{ url_for('static',
+            filename='assets/imgs/customer01.jpg') }}" alt="" />
+          </div>
+        </div>
+
+        <!-- ======================= Cards ================== -->
+        <div class="cardBox">
+          <a href="#" onclick="togglePopup()">
+            <div class="card">
+              <div>
+                <div class="numbers">{{ jumlah_booking }}</div>
+                <div class="cardName">Booking</div>
+              </div>
+
+              <div class="iconBx">
+                <ion-icon name="cart-outline"></ion-icon>
+              </div>
+            </div>
+          </a>
+
+          <div class="card">
+            <div>
+              <div class="numbers">{{ total_transaksi }}</div>
+              <div class="cardName">Total Transaksi</div>
+            </div>
+
+            <div class="iconBx">
+              <ion-icon name="cash-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================ Popup ================= -->
+        <div class="popup" id="popup-1">
+          <div class="content">
+            <div class="close-btn" onclick="togglePopup()">
+              <div class="iconBx">
+                <ion-icon name="close-outline"></ion-icon>
+              </div>
+            </div>
+            <h1>Buat Pesanan</h1> 
+            <div type="text" class="input-field" name="keluhan"><input placeholder="Keluhan"></div>
+            <button class="second-button">Submit</button>
+        </div>
+
+        <!-- ================ Order Details List ================= -->
+        <div class="details">
+          <div class="recentOrders">
+            <div class="cardHeader">
+              <h2>Orders</h2>
+              <a href="{{ url_for('dashboard_customer') }}" class="btn"
+                >View All</a
+              >
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <td>Kode Proses</td>
+                  <td>Mekanik</td>
+                  <td>Status</td>
+                  <td>Total</td>
+                  <td>Action</td>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for row in proses %}
+                <tr>
+                  <td name="proses_id">{{row.0}}</td>
+                  <td>{{row.1}}</td>
+                  <td>{{row.2}}</td>
+                  <td>{{row.3}}</td>
+                  <td>
+                    {% if row.2 == "DALAM ANTRIAN" %}
+                    <form action="{{ url_for('delete_proses') }}" method="POST">
+                      <input type="hidden" name="proses_id" value="{{ row.0 }}">
+                      <button type="submit" class="btn">Hapus</button>
+                    </form>
+                    {% else %}
+                    <form action="{{ url_for('delete_proses') }}" method="POST">
+                      <input type="hidden" name="proses_id" value="{{ row.0 }}">
+                      <button type="submit" class="btn" disabled>Hapus</button>
+                    </form>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>              
+            </table>
+          </div>
+        </div>
+
+    <!-- =========== Scripts =========  -->
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
+    <!-- ====== ionicons ======= -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script>
+      function togglePopup() {
+        document.getElementById("popup-1").classList.toggle("active");
+      }
+    </script>    
+  </body>
+</html>

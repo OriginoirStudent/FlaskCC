@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <title>Halaman Login</title>
+  </head>
+  <body>
+    <div class="form-wrapper">
+      <h2 class="form-title">Login Customer</h2>
+      <p class="form-detail">Silahkan Login.</p>
+      <form action="{{ url_for('login_customer') }}" method="POST">
+        <div class="form-group">
+          <label class="required">User</label>
+          <input
+            type="text"
+            id="nama"
+            name="nama"
+            placeholder="Username"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password" class="required">Password</label>
+          <input
+            type="password"
+            id="userpass"
+            name="userpass"
+            placeholder="Masukkan Password"
+            required
+          />
+        </div>
+        <div class="mb-4"></div>
+        <button type="submit" class="btn btn-blue mb-4">Masuk</button>
+        <p>
+          Belum punya akun?
+          <a href="{{ url_for('register') }}" class="form-link">
+            Silahkan Register disini
+          </a>
+        </p>
+        <p>
+          Anda Admin?
+          <a href="{{ url_for('login') }}" class="form-link">
+            Silahkan Login disini
+          </a>
+        </p>
+        <p>
+          <a href="{{ url_for('index') }}" class="form-link">
+            Kembali ke halaman utama
+          </a>
+        </p>
+      </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

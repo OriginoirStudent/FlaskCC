@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <title>Buat Akun Baru</title>
+  </head>
+  <body>
+    <div class="form-wrapper">
+      <h2 class="form-title">BUAT AKUN</h2>
+      <p class="form-detail">
+        Silahkan isi data anda sesuai pertanyaan dibawah ini.
+      </p>
+      <form action="{{ url_for('register') }}" method="POST">
+        <div class="msg">{{ msg }}</div>
+        <div class="form-group">
+          <label for="username" class="required">Username</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="fulan"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="email" class="required">Email Address</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="fulan@gmail.com"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="alamat">Alamat</label>
+          <select id="alamat" name="alamat" required>
+            <option value="">Pilih Alamat</option>
+            {% for row in alamat_list %}
+            <option value="{{ row[0] }}">{{ row[1] }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="password" class="required">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Masukkan Password"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-blue mb-4">Buat Akun</button>
+        <p>
+          Sudah punya akun?
+          <a href="{{url_for('login')}}" class="form-link">Login Disini</a>
+        </p>
+      </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
